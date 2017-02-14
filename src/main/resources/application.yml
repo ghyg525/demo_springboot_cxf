@@ -1,0 +1,11 @@
+
+##服务配置
+server:
+  port: 8080
+
+
+##日志配置
+logging:
+  level:
+    org:
+      springframework: INFO
