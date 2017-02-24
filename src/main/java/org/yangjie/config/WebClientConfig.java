@@ -1,7 +1,6 @@
 package org.yangjie.config;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.yangjie.service.UserService;
@@ -13,20 +12,20 @@ import org.yangjie.service.UserService;
 @Configuration
 public class WebClientConfig {
 
-	@Autowired
-	private JaxWsProxyFactoryBean clientFactory;
-	
-	
-	@Bean // 创建soap接口服务
-	public UserService userService(){
-		return buildClient(UserService.class, "http://localhost:8080/ws/userService");
-	}
+	// 创建客户端代理类
+	private JaxWsProxyFactoryBean clientFactory = new JaxWsProxyFactoryBean();
 	
 	@SuppressWarnings("unchecked")
 	private final <T> T buildClient(Class<T> clazz, String address) {
 		clientFactory.setServiceClass(clazz);
 		clientFactory.setAddress(address);
 		return (T) clientFactory.create();
+	}
+	
+	
+	@Bean // 创建soap接口服务
+	public UserService userService(){
+		return buildClient(UserService.class, "http://localhost:8080/ws/userService");
 	}
 
 }
